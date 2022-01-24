@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.exceptions.UserNotFoundException;
+import com.assignment.repositories.UserRepository;
 import com.assignment.shoppingApp.User;
-import com.assignment.shoppingApp.repositories.UserRepository;
 
 @Service
 public class UserService {

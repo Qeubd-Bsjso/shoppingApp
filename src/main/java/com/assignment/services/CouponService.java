@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.exceptions.InvalidCouponException;
+import com.assignment.repositories.CouponRepository;
 import com.assignment.shoppingApp.Coupon;
-import com.assignment.shoppingApp.repositories.CouponRepository;
 
 @Service
 public class CouponService {

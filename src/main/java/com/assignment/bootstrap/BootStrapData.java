@@ -3,11 +3,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.assignment.shoppingApp.User;
+import com.assignment.repositories.CouponRepository;
+import com.assignment.repositories.ProductRepository;
+import com.assignment.repositories.UserRepository;
 import com.assignment.shoppingApp.Coupon;
 import com.assignment.shoppingApp.Product;
-import com.assignment.shoppingApp.repositories.CouponRepository;
-import com.assignment.shoppingApp.repositories.ProductRepository;
-import com.assignment.shoppingApp.repositories.UserRepository;
 
 
 /*

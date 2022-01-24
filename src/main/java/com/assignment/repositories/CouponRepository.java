@@ -1,4 +1,4 @@
-package com.assignment.shoppingApp.repositories;
+package com.assignment.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -211,7 +211,7 @@ public class UserController {
 			for(Order order : user.getOrders()) {
 				ObjectNode node = new ObjectMapper().createObjectNode();
 				node.put("orderId", order.getId());
-				node.put("amount", order.getId());
+				node.put("amount", order.getAmount());
 				node.put("date", order.getDate().toString());
 				node.put("coupon", order.getCoupon()==null?null:order.getCoupon().getName());
 				res.add(node);

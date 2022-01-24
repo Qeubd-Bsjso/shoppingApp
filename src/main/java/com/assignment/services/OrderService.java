@@ -10,11 +10,11 @@ import com.assignment.exceptions.OrderNotFoundException;
 import com.assignment.exceptions.OutOfStockException;
 import com.assignment.exceptions.ProductNotFoundException;
 import com.assignment.exceptions.UserNotFoundException;
+import com.assignment.repositories.OrderRepository;
 import com.assignment.shoppingApp.Coupon;
 import com.assignment.shoppingApp.Order;
 import com.assignment.shoppingApp.Product;
 import com.assignment.shoppingApp.User;
-import com.assignment.shoppingApp.repositories.OrderRepository;
 
 @Service
 public class OrderService {
