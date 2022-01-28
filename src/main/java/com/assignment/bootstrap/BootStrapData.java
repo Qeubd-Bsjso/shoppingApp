@@ -2,12 +2,12 @@ package com.assignment.bootstrap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.assignment.shoppingApp.User;
+import com.assignment.model.Coupon;
+import com.assignment.model.Product;
+import com.assignment.model.User;
 import com.assignment.repositories.CouponRepository;
 import com.assignment.repositories.ProductRepository;
 import com.assignment.repositories.UserRepository;
-import com.assignment.shoppingApp.Coupon;
-import com.assignment.shoppingApp.Product;
 
 
 /*

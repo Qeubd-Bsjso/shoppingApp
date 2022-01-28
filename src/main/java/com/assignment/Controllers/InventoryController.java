@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.assignment.model.Coupon;
+import com.assignment.model.Product;
 import com.assignment.services.CouponService;
 import com.assignment.services.ProductService;
-import com.assignment.shoppingApp.Coupon;
-import com.assignment.shoppingApp.Product;
 
 
 @Controller

@@ -1,4 +1,4 @@
-package com.assignment.shoppingApp;
+package com.assignment.model;
 
 import java.util.HashSet;
 import java.util.Objects;

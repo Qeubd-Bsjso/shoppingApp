@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.exceptions.ProductNotFoundException;
+import com.assignment.model.Product;
 import com.assignment.repositories.ProductRepository;
-import com.assignment.shoppingApp.Product;
 
 @Service
 public class ProductService {

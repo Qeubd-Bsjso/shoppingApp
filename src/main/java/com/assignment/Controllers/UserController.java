@@ -20,12 +20,12 @@ import com.assignment.exceptions.OrderNotFoundException;
 import com.assignment.exceptions.OutOfStockException;
 import com.assignment.exceptions.ProductNotFoundException;
 import com.assignment.exceptions.UserNotFoundException;
+import com.assignment.model.Order;
+import com.assignment.model.Payment;
+import com.assignment.model.User;
 import com.assignment.services.OrderService;
 import com.assignment.services.PaymentService;
 import com.assignment.services.UserService;
-import com.assignment.shoppingApp.Order;
-import com.assignment.shoppingApp.Payment;
-import com.assignment.shoppingApp.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

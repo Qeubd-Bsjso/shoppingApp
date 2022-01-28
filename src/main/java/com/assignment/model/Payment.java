@@ -1,4 +1,4 @@
-package com.assignment.shoppingApp;
+package com.assignment.model;
 
 import java.sql.Date;
 import java.util.Objects;

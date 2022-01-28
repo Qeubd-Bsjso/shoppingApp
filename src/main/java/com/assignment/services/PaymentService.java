@@ -11,10 +11,10 @@ import com.assignment.exceptions.InvalidOrderIdException;
 import com.assignment.exceptions.NoResponseException;
 import com.assignment.exceptions.OrderNotFoundException;
 import com.assignment.exceptions.UserNotFoundException;
+import com.assignment.model.Order;
+import com.assignment.model.Payment;
+import com.assignment.model.User;
 import com.assignment.repositories.PaymentRepository;
-import com.assignment.shoppingApp.Order;
-import com.assignment.shoppingApp.Payment;
-import com.assignment.shoppingApp.User;
 
 @Service
 public class PaymentService {

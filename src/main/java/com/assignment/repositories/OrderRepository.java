@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.assignment.shoppingApp.Order;
-import com.assignment.shoppingApp.User;
+import com.assignment.model.Order;
+import com.assignment.model.User;
 
 public interface OrderRepository extends CrudRepository<Order,Long>{
 	
