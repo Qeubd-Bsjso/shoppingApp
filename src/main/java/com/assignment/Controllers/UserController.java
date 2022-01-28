@@ -34,7 +34,7 @@ public class UserController {
 	private final UserService userService;
 	private final OrderService orderService;
 	private final PaymentService paymentService;
-	
+
 	@Autowired
 	public UserController(UserService userService, OrderService orderService, PaymentService paymentService) {
 		super();
@@ -42,24 +42,24 @@ public class UserController {
 		this.orderService = orderService;
 		this.paymentService = paymentService;
 	}
-	
-	
-	
+
+
+
 	/*
-	 *  Mapping to make an order for a given quantity and coupon 
-	 *  
-	 *  
-	 *  
+	 *  Mapping to make an order for a given quantity and coupon
+	 *
+	 *
+	 *
 	 *  return : JSON of order
-	 *   
+	 *
 	 * */
 	@PostMapping("/{userid}/order")
 	public ResponseEntity<ObjectNode> order(@PathVariable("userid") int id, @RequestParam("qty") int qty, @RequestParam(name="coupon", required=false) String coupon) {
 		try {
-			
+
 			//create order object
 			Order order = orderService.createOrder(id, qty, coupon, 10);
-			
+
 			//on successful creation return object as JSON
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectNode node = mapper.createObjectNode();
@@ -89,31 +89,31 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(node);
 		}
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/*
 	 * Mapping to pay for an order
-	 * 
-	 * 
+	 *
+	 *
 	 * return : JSON of transaction
-	 * 
+	 *
 	 * */
 	@PostMapping("/{user_id}/{order_id}/pay")
 	public ResponseEntity<ObjectNode> pay(@PathVariable("user_id") int userId, @PathVariable("order_id") long orderId, @RequestParam("amount") double amount) {
 		Payment payment = null;
 		try {
-			
+
 			// try to make payment
 			payment = paymentService.makePayment(userId, orderId);
-			
+
 			// validate the payment
 			// throws errors if payment is unsuccessful
 			paymentService.validate(payment, amount);
-			
+
 		} catch (UserNotFoundException e) {
 			// for invalid userId
 			ObjectMapper mapper = new ObjectMapper();
@@ -176,8 +176,18 @@ public class UserController {
 			node.put("status", payment.getStatus());
 			node.put("discription", "Payment Failed from bank");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(node);
+		} catch (OutOfStockException e) {
+			// if bank fails transaction
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode node = mapper.createObjectNode();
+			node.put("userId", payment.getUser().getId());
+			node.put("orderId", payment.getOrder().getAmount());
+			node.put("transactionId", payment.getTransactionId());
+			node.put("status", payment.getStatus());
+			node.put("discription", "Product out of stock");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(node);
 		}
-		
+
 		// successful transaction
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = mapper.createObjectNode();
@@ -187,26 +197,26 @@ public class UserController {
 		node.put("status", payment.getStatus());
 		return ResponseEntity.status(HttpStatus.OK).body(node);
 	}
-	
-	
-	
-	
+
+
+
+
 	/*
 	 * Mapping to get list of orders made by a given user
-	 * 
-	 * 
+	 *
+	 *
 	 * return : array of JSON of orders made by a user
-	 * 
+	 *
 	 * */
 	@GetMapping("/{user_id}/orders")
 	public ResponseEntity<List<ObjectNode>> getOrders(@PathVariable("user_id") int userId) {
 		try {
-			
+
 			// get user from userId
 			User user = userService.getUserById(userId);
-			
+
 			List<ObjectNode> res = new ArrayList<>();
-			
+
 			// iterate over orders of given user
 			for(Order order : user.getOrders()) {
 				ObjectNode node = new ObjectMapper().createObjectNode();
@@ -222,22 +232,22 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	/*
 	 * Mapping for all the transactions for a given order
-	 * 
-	 * 
+	 *
+	 *
 	 * return : array of JSON of transactions
-	 * 
+	 *
 	 * */
 	@GetMapping("/{user_id}/orders/{order_id}")
 	public ResponseEntity<List<ObjectNode>> getOrdersById(@PathVariable("user_id") int userId, @PathVariable("order_id") int orderId) {
 		try {
 			List<ObjectNode> res = new ArrayList<>();
-			
+
 			// iterate over all payments
 			for(Payment payment : paymentService.getPaymentsByOrderId(userId, orderId)) {
 				ObjectNode node = new ObjectMapper().createObjectNode();
@@ -250,7 +260,7 @@ public class UserController {
 				node.put("status", payment.getStatus());
 				res.add(node);
 			}
-			
+
 			// return array if successful
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		} catch (UserNotFoundException e) {
@@ -273,5 +283,5 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of(node));
 		}
 	}
-	
+
 }
