@@ -1,28 +1,37 @@
 package com.assignment.exceptions;
 
+import org.springframework.http.HttpStatus;
+
 import com.assignment.model.Payment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*
  * Exception to simulate the negative response from bank
  * */
 @SuppressWarnings("serial")
-public class FailedFromBankException extends RuntimeException{
+public class FailedFromBankException extends DescriptiveException{
 	
-	private final ObjectNode paymentDescription;
+	private final ObjectNode description;
 	
 	public FailedFromBankException(){
 		super("payment failed from bank");
-		paymentDescription = null;
+		description = new ObjectMapper().createObjectNode();
+		description.put("description", "payment failed from bank");
 	}
 
 	public FailedFromBankException(Payment payment) {
 		super("payment failed from bank");
-		paymentDescription = payment.getDescription("payment failed from bank");
+		description = payment.getDescription("payment failed from bank");
 	}
 
-	public ObjectNode getPaymentDescription() {
-		return paymentDescription;
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
+	}
+
+	@Override
+	public ObjectNode getDescription() {
+		return description;
 	}
 
 }
