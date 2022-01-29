@@ -17,6 +17,8 @@ import com.assignment.exceptions.FailedFromBankException;
 import com.assignment.exceptions.InvalidAmountException;
 import com.assignment.exceptions.InvalidOrderIdException;
 import com.assignment.exceptions.NoResponseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 /*
@@ -124,26 +126,37 @@ public class Payment {
 	public void validate(double amount) throws AlreadyPaidForException, InvalidOrderIdException, InvalidAmountException, NoResponseException, FailedFromBankException {
 		if(user.getId() != order.getUser().getId()){
 			this.setStatus("failed"); 
-			throw new InvalidOrderIdException();
+			throw new InvalidOrderIdException(this);
 		}
 		if(order.isPaid()){
 			this.setStatus("failed"); 
-			throw new AlreadyPaidForException();
+			throw new AlreadyPaidForException(this);
 		}
 		if(order.getAmount() != amount) {
 			this.setStatus("failed");
-			throw new InvalidAmountException();
+			throw new InvalidAmountException(this);
 		}
 		int rand = new Random().nextInt(4);
 		if(rand == 0) {
 			this.setStatus("failed");
-			throw new NoResponseException();
+			throw new NoResponseException(this);
 		}
 		if(rand == 1) {
 			this.setStatus("failed");
-			throw new FailedFromBankException();
+			throw new FailedFromBankException(this);
 		}
 		this.setStatus("successful");
+	}
+	
+	
+	public ObjectNode getDescription(String message) {
+		ObjectNode node = new ObjectMapper().createObjectNode();
+		node.put("userId", this.getUser().getId());
+		node.put("orderId", this.getOrder().getId());
+		node.put("transactionId", this.getTransactionId());
+		node.put("status", this.getStatus());
+		node.put("discription", message);
+		return node;
 	}
 
 

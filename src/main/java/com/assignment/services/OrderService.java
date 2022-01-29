@@ -62,8 +62,10 @@ public class OrderService {
 		User user = userService.getUserById(userId);
 
 		// check if quantity is valid
-		if(qty < 1 || qty > product.getQuantity()) {
-			throw new OutOfStockException();
+		if(qty < 1)
+			throw new OutOfStockException(qty);
+		if(qty > product.getQuantity()) {
+			throw new OutOfStockException(product);
 		}
 
 		// create order object
@@ -71,7 +73,7 @@ public class OrderService {
 
 		if(coupon != null) {
 			// check if coupon is valid
-			if(user.getCoupons().contains(new Coupon(coupon, 1))) throw new InvalidCouponException(coupon);
+			if(user.getCoupons().contains(new Coupon(coupon, 1))) throw new InvalidCouponException(user.getId(), coupon);
 
 			// add coupon to order
 			Coupon cpn = couponService.getCouponByName(coupon);
@@ -80,9 +82,6 @@ public class OrderService {
 			// add to user
 			user.getCoupons().add(cpn);
 		}
-
-		// remove product from inventory
-		//product.setQuantity(product.getQuantity() - qty);
 
 		// associate order to user
 		user.addOrder(order);

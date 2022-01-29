@@ -89,7 +89,7 @@ public class PaymentService {
 
 		if(product.getQuantity() < payment.getOrder().getQuantity()){
 			paymentRepository.save(payment);
-			throw new OutOfStockException();
+			throw new OutOfStockException(payment);
 		}
 
 		product.setQuantity(product.getQuantity() - payment.getOrder().getQuantity());
@@ -97,11 +97,6 @@ public class PaymentService {
 		paymentRepository.save(payment);
 		payment.getOrder().setPaid(true);
 		paymentRepository.save(payment);
-	}
-
-
-	private void debit(){
-
 	}
 
 
@@ -123,7 +118,7 @@ public class PaymentService {
 	public List<Payment> getPaymentsByOrderId(int userId, long orderId) throws UserNotFoundException, OrderNotFoundException, InvalidOrderIdException{
 		User user = userService.getUserById(userId);
 		Order order = orderService.getOrderById(orderId);
-		if(user.getId() != order.getUser().getId()) throw new InvalidOrderIdException();
+		if(user.getId() != order.getUser().getId()) throw new InvalidOrderIdException(userId, orderId);
 		return paymentRepository.findByOrder(order);
 	}
 

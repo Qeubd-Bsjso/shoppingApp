@@ -1,9 +1,8 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
+import com.assignment.model.Payment;
 import com.assignment.model.Product;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 
@@ -11,16 +10,32 @@ import com.assignment.model.Product;
  * Exception if product quantity is less than order quantity
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class OutOfStockException extends Exception{
-	private static final String DEFAULT_MESSAGE = "Not enough products in stock";
+public class OutOfStockException extends RuntimeException{
+	
+	private final ObjectNode paymentDescription;
 	
 	public OutOfStockException() {
-		super(DEFAULT_MESSAGE);
+		super("product out of stock");
+		paymentDescription = null;
 	}
 	
 	public OutOfStockException(Product product) {
-		super("Only " + product.getQuantity() + " left in the store.");
+		super("only " + product.getQuantity() + " left in the store");
+		paymentDescription = null;
+	}
+	
+	public OutOfStockException(int qty) {
+		super(qty +" is invalid quantity for a product");
+		paymentDescription = null;
+	}
+
+	public OutOfStockException(Payment payment) {
+		super("only " + payment.getOrder().getProduct().getQuantity() + " left in the store");
+		paymentDescription = payment.getDescription("only " + payment.getOrder().getProduct().getQuantity() + " left in the store");
+	}
+
+	public ObjectNode getPaymentDescription() {
+		return paymentDescription;
 	}
 	
 }

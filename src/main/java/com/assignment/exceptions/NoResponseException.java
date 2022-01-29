@@ -1,16 +1,27 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
+import com.assignment.model.Payment;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*
  * Exception to simulate no response from payment server
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.GATEWAY_TIMEOUT)
-public class NoResponseException extends Exception{
+public class NoResponseException extends RuntimeException{
+	
+	private final ObjectNode paymentDescription;
+	
 	public NoResponseException(){
-		super("No response from server.");
+		super("no response from server");
+		paymentDescription = null;
+	}
+
+	public NoResponseException(Payment payment) {
+		super("no response from server");
+		paymentDescription = payment.getDescription("no response from payment server");
+	}
+
+	public ObjectNode getPaymentDescription() {
+		return paymentDescription;
 	}
 }

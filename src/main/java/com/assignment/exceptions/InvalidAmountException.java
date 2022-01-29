@@ -1,17 +1,27 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-
+import com.assignment.model.Payment;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*
  * Exception if amount of order is different from payment amount
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class InvalidAmountException extends Exception{
+public class InvalidAmountException extends RuntimeException{
+	
+	private final ObjectNode paymentDescription;
+	
 	public InvalidAmountException(){
-		super("Invalid amount for the order");
+		super("invalid amount for the order");
+		paymentDescription = null;
+	}
+
+	public InvalidAmountException(Payment payment) {
+		super("invalid amount for the order, amount needed = " + payment.getOrder().getAmount());
+		paymentDescription = payment.getDescription("invalid amount for the order, amount needed = " + payment.getOrder().getAmount());
+	}
+
+	public ObjectNode getPaymentDescription() {
+		return paymentDescription;
 	}
 }

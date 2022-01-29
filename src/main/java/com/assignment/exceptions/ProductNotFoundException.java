@@ -1,7 +1,5 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 
@@ -9,14 +7,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Exception if product not found 
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class ProductNotFoundException extends Exception{
+public class ProductNotFoundException extends RuntimeException{
 
 	public ProductNotFoundException() {
-		super("Product not found.");
+		super("product not found");
 	}
 	
 	public ProductNotFoundException(int id) {
-		super("Product with id " + id + " not found.");
+		super("product with id " + id + " not found");
 	}
 }

@@ -37,16 +37,8 @@ public class InventoryController {
 	 * */
 	@GetMapping("/inventory")
 	public ResponseEntity<Product> getInventory() {
-		try {
-			// reference to default product
-			Product p = productService.getProductById(10);
-			
-			//return default product
-			return ResponseEntity.status(HttpStatus.OK).body(p);
-		} catch (Exception e) {
-			// return null
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
+		Product p = productService.getProductById(10);
+		return ResponseEntity.status(HttpStatus.OK).body(p);
 	}
 	
 	

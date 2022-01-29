@@ -1,18 +1,27 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-
+import com.assignment.model.Payment;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*
  * Exception if order is already paid for  
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
-public class AlreadyPaidForException extends Exception{
+public class AlreadyPaidForException extends RuntimeException{
+	
+	private final ObjectNode paymentDescription;
 	
 	public AlreadyPaidForException() {
-		super("Order is aleady paid for.");
+		super("order is aleady paid for");
+		paymentDescription = null;
+	}
+	
+	public AlreadyPaidForException(Payment payment) {
+		super("order is aleady paid for");
+		paymentDescription = payment.getDescription("Order is already paid for");
+	}
+
+	public ObjectNode getPaymentDescription() {
+		return paymentDescription;
 	}
 }

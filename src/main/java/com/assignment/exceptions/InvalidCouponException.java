@@ -1,22 +1,23 @@
 package com.assignment.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 
 
 /*
  * Exception is coupon is invalid or already used by user
  * */
 @SuppressWarnings("serial")
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class InvalidCouponException extends Exception{
+public class InvalidCouponException extends RuntimeException{
 
 	public InvalidCouponException() {
-		super("Coupon not found.");
+		super("coupon not found");
 	}
 	
 	public InvalidCouponException(String name) {
-		super("User with name " + name + " not found.");
+		super("coupon with name " + name + " not found");
 	}
+	
+	public InvalidCouponException(int userId, String name) {
+		super("user with id " + userId + " has already used the coupon " + name );
+	}
+	
 }
