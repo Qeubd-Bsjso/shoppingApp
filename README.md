@@ -33,7 +33,7 @@ $ ./mvnw spring-boot:run
 ### Eclipse IDE
  This project was build using eclipse IDE. Load the project from files and then run ShoppingAppApplication.java file using run button.
 
-## H2 Database web interface
+## H2 Database Web interface
 
 After running application, go to your web browser and visit `http://localhost:8080/h2-console/`
 
@@ -41,5 +41,5 @@ In field **JDBC URL** put
 ```
 jdbc:h2:mem:mydata
 ```
-Here you can see current state of database in real time.
+Here you can see current state of database in real time.  
 
